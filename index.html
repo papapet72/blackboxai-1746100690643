@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ételreceptek Nyersanyagokból</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center p-6">
+  <header class="mb-8 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-2">Ételreceptek Nyersanyagokból</h1>
+    <p class="text-gray-600">Adj meg nyersanyagokat, és készítsünk ételrecepteket technológiai leírással!</p>
+  </header>
+
+  <main class="w-full max-w-3xl bg-white rounded-lg shadow p-6">
+    <label for="rawMaterials" class="block text-lg font-semibold mb-2">Nyersanyagok (vesszővel elválasztva):</label>
+    <textarea id="rawMaterials" rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="pl. csirke, rizs, paprika"></textarea>
+
+    <button id="generateBtn" class="mt-4 bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors flex items-center">
+      <i class="fas fa-utensils mr-2"></i> Receptek generálása
+    </button>
+
+    <section id="recipesSection" class="mt-8">
+      <!-- Generated recipes will appear here -->
+    </section>
+  </main>
+
+  <script>
+    const recipesDB = [
+      {
+        ingredients: ['csirke', 'rizs', 'paprika'],
+        name: 'Paprikás csirke rizzsel',
+        description: 'A csirke darabokat megpirítjuk, majd paprikás szósszal főzzük, rizst külön főzünk hozzá.',
+        technology: 'Először a csirke darabokat olajon megpirítjuk, majd hozzáadjuk a paprikát és fűszereket. Lassú tűzön főzzük, amíg a hús megpuhul. Külön főzzük a rizst, majd tálaljuk együtt.'
+      },
+      {
+        ingredients: ['paradicsom', 'bazsalikom', 'tészta'],
+        name: 'Paradicsomos bazsalikomos tészta',
+        description: 'Friss paradicsomból és bazsalikomból készült szósz tésztával tálalva.',
+        technology: 'A paradicsomot megpároljuk, hozzáadjuk a bazsalikomot és fűszereket. A tésztát kifőzzük, majd összekeverjük a szósszal.'
+      },
+      {
+        ingredients: ['tojás', 'liszt', 'tej'],
+        name: 'Palacsinta',
+        description: 'Egyszerű palacsinta lisztből, tojásból és tejből.',
+        technology: 'A hozzávalókat simára keverjük, majd forró serpenyőben vékony palacsintákat sütünk.'
+      }
+    ];
+
+    function generateRecipes(rawMaterials) {
+      const inputIngredients = rawMaterials.toLowerCase().split(',').map(i => i.trim()).filter(i => i.length > 0);
+      if (inputIngredients.length === 0) {
+        return [];
+      }
+      // Find recipes where all ingredients are included in input
+      return recipesDB.filter(recipe =>
+        recipe.ingredients.every(ing => inputIngredients.includes(ing))
+      );
+    }
+
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      const rawMaterials = document.getElementById('rawMaterials').value;
+      const recipes = generateRecipes(rawMaterials);
+      const recipesSection = document.getElementById('recipesSection');
+      recipesSection.innerHTML = '';
+
+      if (recipes.length === 0) {
+        recipesSection.innerHTML = '<p class="text-red-600 font-semibold">Nincs találat a megadott nyersanyagokra.</p>';
+        return;
+      }
+
+      recipes.forEach(recipe => {
+        const recipeCard = document.createElement('article');
+        recipeCard.className = 'border border-gray-300 rounded-md p-4 mb-6 shadow-sm bg-gray-50';
+
+        recipeCard.innerHTML = `
+          <h2 class="text-2xl font-bold text-indigo-700 mb-2">${recipe.name}</h2>
+          <p class="mb-2"><strong>Leírás:</strong> ${recipe.description}</p>
+          <p><strong>Technológiai leírás:</strong> ${recipe.technology}</p>
+        `;
+
+        recipesSection.appendChild(recipeCard);
+      });
+    });
+  </script>
+</body>
+</html>
