@@ -1,94 +1,262 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ételreceptek Nyersanyagokból</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyors Rétes Tészta Recept</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .ingredients {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .ingredients ul {
+            list-style: none;
+        }
+
+        .ingredients li {
+            padding: 10px 0;
+            font-size: 1.1em;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .ingredients li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .steps {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            position: relative;
+            padding-left: 80px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .step:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .step p {
+            font-size: 1.05em;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .tips {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .tips h3 {
+            color: #d63031;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .tips ul {
+            list-style: none;
+        }
+
+        .tips li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #2d3436;
+        }
+
+        .tips li:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #856404;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .step {
+                padding-left: 70px;
+            }
+
+            .step:before {
+                width: 35px;
+                height: 35px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col items-center p-6">
-  <header class="mb-8 text-center">
-    <h1 class="text-4xl font-bold text-gray-800 mb-2">Ételreceptek Nyersanyagokból</h1>
-    <p class="text-gray-600">Adj meg nyersanyagokat, és készítsünk ételrecepteket technológiai leírással!</p>
-  </header>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🥐 Gyors Rétes Tészta 🥐</h1>
+            <p>Könnyen elkészíthető, gyorsan húzható recept</p>
+        </div>
 
-  <main class="w-full max-w-3xl bg-white rounded-lg shadow p-6">
-    <label for="rawMaterials" class="block text-lg font-semibold mb-2">Nyersanyagok (vesszővel elválasztva):</label>
-    <textarea id="rawMaterials" rows="4" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="pl. csirke, rizs, paprika"></textarea>
+        <div class="content">
+            <div class="section">
+                <h2>Hozzávalók (fél kiló lisztre)</h2>
+                <div class="ingredients">
+                    <ul>
+                        <li><strong>500 g</strong> finomliszt (BL-55)</li>
+                        <li><strong>250 ml</strong> langyos víz</li>
+                        <li><strong>1 db</strong> tojás</li>
+                        <li><strong>50 ml</strong> étolaj (napraforgó vagy repce)</li>
+                        <li><strong>1 evőkanál</strong> ecet (almaecet vagy fehér ecet)</li>
+                        <li><strong>1 csipet</strong> só</li>
+                        <li><strong>Extra olaj</strong> a tészta kenéséhez</li>
+                    </ul>
+                </div>
+            </div>
 
-    <button id="generateBtn" class="mt-4 bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition-colors flex items-center">
-      <i class="fas fa-utensils mr-2"></i> Receptek generálása
-    </button>
+            <div class="section">
+                <h2>Elkészítés</h2>
+                <div class="steps">
+                    <div class="step">
+                        <p>Egy nagy tálban keverd össze a langyos vizet, a tojást, az olajat, az ecetet és a sót. Alaposan keverd el, hogy homogén legyen.</p>
+                    </div>
 
-    <section id="recipesSection" class="mt-8">
-      <!-- Generated recipes will appear here -->
-    </section>
-  </main>
+                    <div class="step">
+                        <p>Add hozzá fokozatosan a lisztet, és kezdd el dagasztani. Először kanállal, majd amikor összeáll, kézzel gyúrd tovább <span class="highlight">8-10 percig</span>, amíg sima, rugalmas tésztát kapsz.</p>
+                    </div>
 
-  <script>
-    const recipesDB = [
-      {
-        ingredients: ['csirke', 'rizs', 'paprika'],
-        name: 'Paprikás csirke rizzsel',
-        description: 'A csirke darabokat megpirítjuk, majd paprikás szósszal főzzük, rizst külön főzünk hozzá.',
-        technology: 'Először a csirke darabokat olajon megpirítjuk, majd hozzáadjuk a paprikát és fűszereket. Lassú tűzön főzzük, amíg a hús megpuhul. Külön főzzük a rizst, majd tálaljuk együtt.'
-      },
-      {
-        ingredients: ['paradicsom', 'bazsalikom', 'tészta'],
-        name: 'Paradicsomos bazsalikomos tészta',
-        description: 'Friss paradicsomból és bazsalikomból készült szósz tésztával tálalva.',
-        technology: 'A paradicsomot megpároljuk, hozzáadjuk a bazsalikomot és fűszereket. A tésztát kifőzzük, majd összekeverjük a szósszal.'
-      },
-      {
-        ingredients: ['tojás', 'liszt', 'tej'],
-        name: 'Palacsinta',
-        description: 'Egyszerű palacsinta lisztből, tojásból és tejből.',
-        technology: 'A hozzávalókat simára keverjük, majd forró serpenyőben vékony palacsintákat sütünk.'
-      }
-    ];
+                    <div class="step">
+                        <p>A tésztát formázd golyóvá, kend meg alaposan olajjal minden oldalról, és tedd egy tálba. Fedd le folpackkal vagy nedves konyharuhával.</p>
+                    </div>
 
-    function generateRecipes(rawMaterials) {
-      const inputIngredients = rawMaterials.toLowerCase().split(',').map(i => i.trim()).filter(i => i.length > 0);
-      if (inputIngredients.length === 0) {
-        return [];
-      }
-      // Find recipes where all ingredients are included in input
-      return recipesDB.filter(recipe =>
-        recipe.ingredients.every(ing => inputIngredients.includes(ing))
-      );
-    }
+                    <div class="step">
+                        <p>Hagyd pihenni <span class="highlight">legalább 30-40 percet</span> szobahőmérsékleten. Ez alatt a tészta rugalmassá válik és könnyen húzható lesz.</p>
+                    </div>
 
-    document.getElementById('generateBtn').addEventListener('click', () => {
-      const rawMaterials = document.getElementById('rawMaterials').value;
-      const recipes = generateRecipes(rawMaterials);
-      const recipesSection = document.getElementById('recipesSection');
-      recipesSection.innerHTML = '';
+                    <div class="step">
+                        <p>Застелj le egy nagy asztalt tiszta konyharuhával, és hintsd meg liszttel. Tedd rá a tésztát, és kezdd el óvatosan nyújtani, majd húzni a kezed hátával.</p>
+                    </div>
 
-      if (recipes.length === 0) {
-        recipesSection.innerHTML = '<p class="text-red-600 font-semibold">Nincs találat a megadott nyersanyagokra.</p>';
-        return;
-      }
+                    <div class="step">
+                        <p>Húzd a tésztát <span class="highlight">papírvékonyra</span>, amíg át tudsz látni rajta. A vastag széleket vágd le. Most már töltheted és sütésre előkészítheted!</p>
+                    </div>
+                </div>
+            </div>
 
-      recipes.forEach(recipe => {
-        const recipeCard = document.createElement('article');
-        recipeCard.className = 'border border-gray-300 rounded-md p-4 mb-6 shadow-sm bg-gray-50';
-
-        recipeCard.innerHTML = `
-          <h2 class="text-2xl font-bold text-indigo-700 mb-2">${recipe.name}</h2>
-          <p class="mb-2"><strong>Leírás:</strong> ${recipe.description}</p>
-          <p><strong>Technológiai leírás:</strong> ${recipe.technology}</p>
-        `;
-
-        recipesSection.appendChild(recipeCard);
-      });
-    });
-  </script>
+            <div class="tips">
+                <h3>🌟 Profi Tippek</h3>
+                <ul>
+                    <li>Az ecet segít rugalmassá tenni a tésztát, ne hagyd ki!</li>
+                    <li>Minél tovább pihen a tészta, annál könnyebb lesz húzni</li>
+                    <li>A tészta húzása előtt melegítsd fel a kezed - langyos kézzel könnyebb dolgozni</li>
+                    <li>Ha szakad a tészta, ne aggódj! Csak fedd rá a másik réteget</li>
+                    <li>A tésztát akár előző nap is elkészítheted, hűtőben 2-3 napig eláll</li>
+                    <li>Sütés előtt bőven kend meg vajjal vagy olajjal a réteslapokat</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
